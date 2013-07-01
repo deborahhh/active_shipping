@@ -222,11 +222,11 @@ module ActiveMerchant
             end
 
             # not implemented:  * Shipment/ShipmentServiceOptions element
-            #if options[:origin_account]
+            if options[:origin_account]
               shipment << XmlNode.new("RateInformation") do |rate_info_node|
                 rate_info_node << XmlNode.new("NegotiatedRatesIndicator")
               end
-            #end
+            end
           end
         end
         xml_request.to_s
@@ -290,12 +290,12 @@ module ActiveMerchant
 
             rate_estimates << RateEstimate.new(origin, destination, @@name,
                                 service_name_for(origin, service_code),
-                                :total_price => rated_shipment.get_text('TotalCharges/MonetaryValue').to_s.to_f,
+                                :total_price => rated_shipment.get_text('NegotiatedRates/NetSummaryCharges/GrandTotal/MonetaryValue').to_s.to_f,
                                 :currency => rated_shipment.get_text('TotalCharges/CurrencyCode').to_s,
                                 :service_code => service_code,
                                 :packages => packages,
                                 :delivery_range => [timestamp_from_business_day(days_to_delivery)],
-                                :negotiated_rate =>                               rated_shipment.get_text('NegotiatedRates/NetSummaryCharges/GrandTotal/MonetaryValue').to_s.to_f)
+                                :negotiated_rate => rated_shipment.get_text('NegotiatedRates/NetSummaryCharges/GrandTotal/MonetaryValue').to_s.to_f)
           end
         end
         RateResponse.new(success, message, Hash.from_xml(response).values.first, :rates => rate_estimates, :xml => response, :request => last_request)
