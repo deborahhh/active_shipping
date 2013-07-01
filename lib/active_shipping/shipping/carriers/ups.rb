@@ -229,6 +229,7 @@ module ActiveMerchant
             end
           end
         end
+        logger.info "\n\nUPS XML REQUEST:\n\n" + xml_request
         xml_request.to_s
       end
 
