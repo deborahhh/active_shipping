@@ -229,6 +229,7 @@ module ActiveMerchant
             end
           end
         end
+        puts xml_request
         xml_request.to_s
       end
 
