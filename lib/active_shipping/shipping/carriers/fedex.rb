@@ -183,7 +183,7 @@ module ActiveMerchant
               rs << build_location_node('Origin', origin)
             end
             
-            rs << XmlNode.new('RateRequestTypes', 'ACCOUNT')
+            rs << XmlNode.new('RateRequestTypes', 'LIST')
             rs << XmlNode.new('PackageCount', packages.size)
             packages.each do |pkg|
               rs << XmlNode.new('RequestedPackages') do |rps|
